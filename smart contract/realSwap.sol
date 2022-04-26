@@ -26,7 +26,6 @@ contract realSwap is Ownable {
     
     constructor() 
     {          
-        // presaledTokenAddress = address(0x270aE074BAfa4f8b2751363721baDC81a09Dc0b0);
         presaledTokenAddress = address(0x0c051B7de800021c8a56ba49A06CC129CaDA30Ce);
         realTokenAddress = address(0x9695Fb9F41AF2AA9C97154F6Ab283269dffb44fA);
         presaleToken = ERC20(presaledTokenAddress);
@@ -79,13 +78,13 @@ contract realSwap is Ownable {
         require(_amountIn > 0 , "Invalid amount.");
         require(presaleToken.balanceOf(address(msg.sender)).sub(_amountIn) >= 0 , "Insufficient presaled tokens.");
 
-        uint8 decimals = realToken.decimals();
-        uint256 amountOut = _amountIn.div(10 ** 18).mul(10 ** decimals);
+        uint8 pDecimals = presaleToken.decimals();
+        uint8 rDecimals = realToken.decimals();
+        uint256 amountOut = _amountIn.div(10 ** pDecimals).mul(10 ** rDecimals);
 
-        require(realToken.balanceOf(address(this)).sub(amountOut) > 0 , "Sorry, insufficient real tokens.");
+        require(realToken.balanceOf(address(this)).sub(amountOut) >= 0 , "Sorry, insufficient real tokens.");
         
         presaleToken.transferFrom(msg.sender, address(this), _amountIn);  
-        realToken.approve(address(this), amountOut);
         realToken.transfer(msg.sender, amountOut);
 
         emit Swapped(_Atoken, _Btoken, _amountIn, amountOut);
@@ -96,8 +95,10 @@ contract realSwap is Ownable {
         require(_Btoken == realTokenAddress, "Invalid output token address.");
         require(_amountIn > 0 , "Invalid amount.");
         
-        uint8 decimals = realToken.decimals();
-        uint256 amountOut = _amountIn.div(10 ** 18).mul(10 ** decimals);
+        uint8 pDecimals = presaleToken.decimals();
+        uint8 rDecimals = realToken.decimals();
+        uint256 amountOut = _amountIn.div(10 ** pDecimals).mul(10 ** rDecimals);
+
         return amountOut;
     }
 

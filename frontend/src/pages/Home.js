@@ -7,15 +7,16 @@ import Purchase from "../components/invest/Purchase";
 
 class Home extends StatefulComponent {
 
-
     render() {
         return (
             <>
-                <Toast/>
-                <section id="HomeHero">
-                    <ProjectDescription/>
-                    <Purchase/>
-                </section>
+                <div id="main">
+                    <Toast/>
+                    <section id="HomeHero">
+                        <ProjectDescription/>
+                        <Purchase/>
+                    </section>
+                </div>
                 <Footer/>
             </>
         );

@@ -39,10 +39,10 @@ export const Footer = () => {
         />
       )}
             
-            <img className="popsicle threePop" src="/img/threePop.png" alt="#" />
-            <img className="popsicle onePop" src="/img/onePop.png" alt="#" />
+            {/* <img className="popsicle threePop" src="/img/threePop.png" alt="#" /> */}
+            {/* <img className="popsicle onePop" src="/img/onePop.png" alt="#" /> */}
             <img className="popsicle twoPop" src="/img/twoPop.png" alt="#" />
-            <img className="popsicle fourPop" src="/img/onePop.png" alt="#" />
+            <img className="popsicle fourPop" src="/img/onePop.png" alt="#" style={{zIndex: "0 !important"}}/>
                
         </footer>
     );

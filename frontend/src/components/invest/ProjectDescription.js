@@ -24,7 +24,7 @@ class ProjectDescription extends StatefulComponent {
                     }</div>
                     {
                         !this.props.whitepaperUrl ? <></> :
-                        <div><a className="whitePpr" href={this.props.whitepaperUrl} target="_blank" rel="noreferrer">Read our litepaper <span className="arrowRightBtn"><i className="fa-solid fa-chevron-right"></i></span></a></div>
+                        <div><a className="whitePpr" href={this.props.whitepaperUrl} target="_blank" rel="noreferrer">Read our whitepaper <span className="arrowRightBtn"><i className="fa-solid fa-chevron-right"></i></span></a></div>
                     }
                 </div>
             </>

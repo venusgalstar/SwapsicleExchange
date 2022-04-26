@@ -10,11 +10,11 @@ const PurchaseForm = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const dispatch = useDispatch();
-    const returnToken = useSelector(state => state.returnToken);
     const account = useSelector(state => state.account);
     const returnTokenAmount = useSelector(state => state.returnTokenAmount);
-    const balanceOfPresaleToken = useSelector(state => state.balanceOfPresaleToken);
     const investTokenAmount = useSelector(state => state.investTokenAmount);
+    const balanceOfPresaleToken = useSelector(state => state.balanceOfPresaleToken);
+    const balanceOfRealToken = useSelector(state => state.balanceOfRealToken);
 
     const swap = () => {
         dispatch({ type: "SWAP_TOKEN", payload: { investTokenAmount: invest } });
@@ -52,16 +52,22 @@ const PurchaseForm = () => {
     };
 
     const onClickMAX = () => {
-        dispatch({ type: "GET_BALANCE_OF_PRESALED_TOKEN", payload: {} });
+        dispatch({ type: "GET_BALANCE_AND_SET_AMOUNT_OF_pPOP_TOKEN", payload: {} });
     }
-
-    useEffect(() => {
-        if (balanceOfPresaleToken >= 0) setInvestAmount(balanceOfPresaleToken);
-    }, [balanceOfPresaleToken])
 
     useEffect(() => {
         if (investTokenAmount >= 0) setInvestAmount(investTokenAmount);
     }, [investTokenAmount])
+
+    useEffect(() => {
+        if(account)
+        {            
+            setTimeout(() => {
+                dispatch({ type: "GET_BALANCE_OF_PRESALED_TOKEN", payload: {} });
+                dispatch({ type: "GET_BALANCE_OF_REAL_TOKEN", payload: {} });
+            }, [500])
+        }
+    }, [account, dispatch]);
 
     return (
         <>
@@ -75,7 +81,18 @@ const PurchaseForm = () => {
                     }
                     <div className="newInputs">
                         <div className="leftInputs NewHolder">
-                            <div className="amoutToken"><label>Enter amount</label></div>
+                            <div className="amoutToken">
+                                <label>From</label>                                    
+                                { 
+                                balanceOfPresaleToken >= 0 ?
+                                    balanceOfPresaleToken - Math.floor(balanceOfPresaleToken) > 0 ?
+                                        <span>Balance : {balanceOfPresaleToken?.toFixed(3)}</span>
+                                        :
+                                        <span>Balance : {balanceOfPresaleToken}</span>
+                                    :
+                                    <span>Balance : 0 </span>
+                                }
+                            </div>
                             <div className="newInputsItem">
                                 {/* <input className={returnCoinAmount > 0 ? "input-warning active" : "input-warning"} type="text" placeholder="1000" */}
                                 {
@@ -101,7 +118,18 @@ const PurchaseForm = () => {
 
                         <div className="rightInputs NewHolder">
 
-                            <div className="amoutToken"><label>{returnToken} token</label></div>
+                            <div className="amoutToken">
+                                <label>To</label>
+                                { 
+                                balanceOfRealToken >= 0 ?
+                                    balanceOfRealToken - Math.floor(balanceOfRealToken) > 0 ?
+                                        <span>Balance : {balanceOfRealToken?.toFixed(3)}</span>
+                                        :
+                                        <span>Balance : {balanceOfRealToken}</span>
+                                    :
+                                    <span>Balance : 0 </span>
+                                }
+                            </div>
                             <div className="newInputsItem">
                                 <input className="disablePointer" type="text" placeholder="Autofill"
                                     value={returnTokenAmount ?? "Autofill"} onChange={() => { }} readOnly />

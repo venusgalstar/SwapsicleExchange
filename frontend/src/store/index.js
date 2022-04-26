@@ -9,11 +9,11 @@ const _initialState = {
 
     name: "Swapsicle",
     imageUrl: "",
-    introTitle: "Welcome to our presale",
-    introDescription: "On purchase pPOPS tokens will be immediately sent to your wallet. When the DEX is live you will be able to swap your pPOPS token 1 to 1 with our POPS token.",
+    introTitle: "Swap your presale tokens",
+    introDescription: "Now you have your pPOPS you can now exchange them for the POPs token that is tradable on swapsicle DEX.",
     purchasedTitle: "Congratulations!",
     purchasedDescription: "Purchase complete. Your pPOP tokens will be immediately sent to your wallet.",
-    whitepaperUrl: "/docs/Swapsicle_Lite_Paper.pdf",
+    whitepaperUrl: "/docs/Swapsicle_Whitepaper_v1.2.pdf",
     investToken: "USDC.e",
     investTokenAmount: 0,
     returnToken: "pPOP",
@@ -21,7 +21,8 @@ const _initialState = {
     minInvest: "$ 100",
     maxInvest: "$ 20,000",
     transaction: "",
-    balanceOfPresaleToken: 0
+    balanceOfPresaleToken: 0,
+    balanceOfRealToken: 0
 
 }
 
@@ -82,6 +83,9 @@ const swap = async (state, inputAmount) => {
             }
             await contract.methods.swap(config.pPOPAddress, config.rPOPAddress, amount).send({ from: state.account, gas: 3000000 }); 
             
+            await getBalanceOfPresaledToken(state);
+            await getBalanceOfRealToken(state);
+
             store.dispatch({
                 type: "RETURN_DATA", 
                 payload: {
@@ -102,8 +106,7 @@ const swap = async (state, inputAmount) => {
     }
 }
 
-export const getBalanceOfPresaledToken = async (state) => {
-    
+export const getBalanceOfPresaledToken = async (state, flag = true) => {    
     if (!state.account) {
         alertMsg("Please connect metamask!");
         return;
@@ -114,7 +117,29 @@ export const getBalanceOfPresaledToken = async (state) => {
         console.log("pPOPBalance = ", pPOPBalance);
         store.dispatch({
             type: "UPDATE_PRESALE_TOKEN_BALANCE",
-            payload: pPOPBalance
+            payload: {
+                pPOPBalance,
+                flag
+            }
+        })
+    }catch(e){
+        console.log("Error on swap : ", e);
+        store.dispatch({ type: "RETURN_DATA", payload: {} });
+    }    
+}
+
+export const getBalanceOfRealToken = async (state) => {    
+    if (!state.account) {
+        alertMsg("Please connect metamask!");
+        return;
+    }
+    try{
+        var rPOPBalance = await rPOPs.methods.balanceOf(state.account).call();     
+        rPOPBalance =  globalWeb3.utils.fromWei(rPOPBalance, 'ether');
+        console.log("rPOPBalance = ", rPOPBalance);
+        store.dispatch({
+            type: "UPDATE_REAL_TOKEN_BALANCE",
+            payload: rPOPBalance
         })
     }catch(e){
         console.log("Error on swap : ", e);
@@ -124,12 +149,39 @@ export const getBalanceOfPresaledToken = async (state) => {
 
 const reducer = (state = init(_initialState), action) => {
     switch (action.type) {
-        case "UPDATE_PRESALE_TOKEN_BALANCE":                        
+        case "UPDATE_REAL_TOKEN_BALANCE":
             state = {...state, 
-                balanceOfPresaleToken: action.payload,
-                investTokenAmount: action.payload
+                balanceOfRealToken: action.payload
             };
-            calcTokenAmount(state, action.payload);
+            break;
+        case "UPDATE_PRESALE_TOKEN_BALANCE":  
+            if(action.payload.flag === true)
+            {                     
+                state = {...state, 
+                    balanceOfPresaleToken: action.payload.pPOPBalance
+                }; 
+            }
+            else {
+                state = {...state, 
+                    balanceOfPresaleToken: action.payload.pPOPBalance,
+                    investTokenAmount: action.payload.pPOPBalance
+                };
+                calcTokenAmount(state, action.payload.pPOPBalance);
+            }
+            break;
+        case "GET_BALANCE_OF_REAL_TOKEN":            
+            if (!checkNetwork(state.chainId)) {
+                changeNetwork();
+                return state;
+            }            
+            getBalanceOfRealToken(state);            
+            break;
+        case "GET_BALANCE_AND_SET_AMOUNT_OF_pPOP_TOKEN":            
+            if (!checkNetwork(state.chainId)) {
+                changeNetwork();
+                return state;
+            }            
+            getBalanceOfPresaledToken(state, false);            
             break;
         case "GET_BALANCE_OF_PRESALED_TOKEN":
             if (!checkNetwork(state.chainId)) {

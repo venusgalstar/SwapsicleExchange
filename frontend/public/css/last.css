@@ -6,8 +6,6 @@ padding:0;
 font-family: 'Ubuntu', sans-serif;
 }
 
-
-
 i {
     font-family: FontAwesome;
 }
@@ -24,6 +22,17 @@ i {
   }
   div#root {
     overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0 5% !important;
+  }
+  #main{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   #HomeHero {
     display: flex;
@@ -52,6 +61,7 @@ i {
     max-width: 490px;
 }
 .wallet-connection {
+    z-index: 5;
     border-radius: 20px;
     max-width: 650px;
     background: #141928;
@@ -310,10 +320,16 @@ button.selectDinar {
 .amoutToken {
     display: flex;
     color: white;
+    justify-content: space-between;
 }
 .amoutToken label {
     color: #8a8c94;
     font-size: 20px;
+}
+.amoutToken span{
+    padding-top: 3px;
+    color: #8a8c94;
+    font-size: 15px;
 }
 span.tokenpr {
     color: white;
@@ -527,6 +543,12 @@ footer {
     justify-content: space-around;
     align-items: center;
     padding: 20px;
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 10px;
 }
 footer .left a {
     color: white;
@@ -576,7 +598,7 @@ footer .center a:hover, footer .left a:hover {
   .fourPop {
     animation: 4s ease-out 0s 1 slideInFromLeft;
     position: absolute;
-    bottom: -125px;
+    bottom: 0px;
     right: 0%;
     z-index: -1;
     max-width: 145px;
@@ -589,9 +611,6 @@ footer .center a:hover, footer .left a:hover {
       transform: translateX(0);
     }
   }
-
-
-
 
 /* Popup style */
 .popup-box {
@@ -711,7 +730,6 @@ footer .center a:hover, footer .left a:hover {
    }
 }
 
-
 /* **** MOBILE **** */
 @media (max-width: 1080px) {
     #root {
@@ -725,9 +743,11 @@ footer .center a:hover, footer .left a:hover {
 }
 
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
     #root {
         padding-top: 100px;
+        padding: 0 5%;
+        height: auto !important;
     }
     #HomeHero {
         flex-wrap: wrap;
@@ -740,6 +760,7 @@ footer .center a:hover, footer .left a:hover {
     footer {
         flex-wrap: wrap;
         margin-top: 50px;
+        position: relative;
     }
     footer .center a {
         margin-right: 0;
@@ -779,12 +800,26 @@ footer .center a:hover, footer .left a:hover {
     }
     .leftInputs.NewHolder {
         margin-right: 0;
+        margin-bottom: 40px;
+        width: 100%;
+    }
+    .rightInputs.NewHolder {
+        width: 100%;
     }
     .newInputs .amoutToken label:first-child {
         margin-bottom: 0;
     }
-    .leftInputs.NewHolder {
-        margin-bottom: 40px;
+    button.selectDinar{
+        width: 150px;
+    }
+    span.max_button{
+        width: 80px;        
+    }
+    .newInputsItem input{
+        width: calc(100% - 230px);
+    }
+    .rightInputs.NewHolder> .newInputsItem button{
+        margin-left: 90px;
     }
 }
 .account-address {
