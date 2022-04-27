@@ -6,20 +6,20 @@ var config = {
     contractAbi: abi,
     ERC20Abi: ERC20Abi,
 
-    mainNetUrl: "https://rinkeby.infura.io/v3/",            //Rinkeby RPC
-    // mainNetUrl: "https://api.avax.network/ext/bc/C/rpc",     //Avalanch RPC
+    // mainNetUrl: "https://rinkeby.infura.io/v3/",            //Rinkeby RPC
+    mainNetUrl: "https://api.avax.network/ext/bc/C/rpc",     //Avalanch RPC
 
-    chainId: '0x4',    // Rinkeby : '0x4'   
-    // chainId: '0xa86a',    // Avalanch : '0xa86a'
+    // chainId: '0x4',    // Rinkeby : '0x4'   
+    chainId: '0xa86a',    // Avalanch : '0xa86a'
 
-    contractAddress: "0x5f4876c7E003Ce6A3b47D069Ce01B2DBD87eab60",      // testing swap contract address
-    // contractAddress: "0x5127eb1F70Ae8d6E38a84cCFe7C511ec53aca628",      // swap contract address on Avalanch
+    // contractAddress: "0x5f4876c7E003Ce6A3b47D069Ce01B2DBD87eab60",      // testing swap contract address
+    contractAddress: "0x574E7218F5513d5266f267eB62172822A5E03226",      // swap contract address on Avalanch
 
-    pPOPAddress: "0x0c051B7de800021c8a56ba49A06CC129CaDA30Ce",      // testing presale token
-    // pPOPAddress: "0x270ae074bafa4f8b2751363721badc81a09dc0b0",      // presale token on Avalanch
+    // pPOPAddress: "0x0c051B7de800021c8a56ba49A06CC129CaDA30Ce",      // testing presale token
+    pPOPAddress: "0x270ae074bafa4f8b2751363721badc81a09dc0b0",      // presale token on Avalanch
 
-    rPOPAddress: "0xfc30966D42B6074edFaDb50D51b18F278EF32d9B"       // testing real token on Rinkeby
-    // rPOPAddress: ""       //  real token on Avalanch
+    // rPOPAddress: "0xfc30966D42B6074edFaDb50D51b18F278EF32d9B"       // testing real token on Rinkeby
+    rPOPAddress: ""       //  real token on Avalanch
 
 };
 
