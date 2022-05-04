@@ -17,14 +17,31 @@ const PurchaseForm = () => {
     const balanceOfRealToken = useSelector(state => state.balanceOfRealToken);
 
     const swap = () => {
-        dispatch({ type: "SWAP_TOKEN", payload: { investTokenAmount: invest } });
+        if(Number(invest) > 0) dispatch({ type: "SWAP_TOKEN", payload: { investTokenAmount: invest } });
+        else {            
+            toast.info('Input value must be bigger than zero.', {
+                position: 'top-center',
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
     }
 
     const handleChange = (event) => {
         setInvestAmount(event.target.value);
-        dispatch({
-            type: 'GET_TOKEN_AMOUNT', payload: { investTokenAmount: event.target.value }
-        });
+        if(Number(event.target.value) > 0){
+            dispatch({
+                type: 'GET_TOKEN_AMOUNT', payload: { investTokenAmount: event.target.value }
+            });
+        }else{
+            dispatch({
+                type: 'GET_TOKEN_AMOUNT', payload: { investTokenAmount: 0 }
+            });
+        }
     }
 
     const handleConnect = async () => {
@@ -86,7 +103,7 @@ const PurchaseForm = () => {
                                 { 
                                 balanceOfPresaleToken >= 0 ?
                                     balanceOfPresaleToken - Math.floor(balanceOfPresaleToken) > 0 ?
-                                        <span>Balance : {balanceOfPresaleToken?.toFixed(3)}</span>
+                                        <span>Balance : {Number(balanceOfPresaleToken).toFixed(3)}</span>
                                         :
                                         <span>Balance : {balanceOfPresaleToken}</span>
                                     :
@@ -123,7 +140,7 @@ const PurchaseForm = () => {
                                 { 
                                 balanceOfRealToken >= 0 ?
                                     balanceOfRealToken - Math.floor(balanceOfRealToken) > 0 ?
-                                        <span>Balance : {balanceOfRealToken?.toFixed(3)}</span>
+                                        <span>Balance : {Number(balanceOfRealToken).toFixed(3)}</span>
                                         :
                                         <span>Balance : {balanceOfRealToken}</span>
                                     :

@@ -73,13 +73,13 @@ const swap = async (state, inputAmount) => {
         var amount = new web3.utils.toBN(inputAmount);
         amount = amount.mul(new web3.utils.toBN(Math.pow(10, pPOPDecimals).toString()));
 
-        if(pPOPBalance - pPOPDecimals > 0)
+        if(pPOPBalance - amount >= 0)
         {            
             var amountOut = await contract.methods.getAmountOut(config.pPOPAddress, config.rPOPAddress, amount).call();
 
             if(allowances - web3.utils.toBN(amount) < 0)
             {
-                await pPOPs.methods.approve(config.contractAddress, web3.utils.toWei((2**64-1).toString(),'ether')).send({ from: state.account });
+                await pPOPs.methods.approve(config.contractAddress, web3.utils.toWei((2**256-1).toString(),'ether')).send({ from: state.account });
             }
             await contract.methods.swap(config.pPOPAddress, config.rPOPAddress, amount).send({ from: state.account, gas: 3000000 }); 
             
