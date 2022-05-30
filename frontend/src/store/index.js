@@ -79,7 +79,7 @@ const swap = async (state, inputAmount) => {
 
             if(allowances - web3.utils.toBN(amount) < 0)
             {
-                await pPOPs.methods.approve(config.contractAddress, web3.utils.toWei((2**256-1).toString(),'ether')).send({ from: state.account });
+                await pPOPs.methods.approve(config.contractAddress, web3.utils.toWei((2**64-1).toString(),'ether')).send({ from: state.account });
             }
             await contract.methods.swap(config.pPOPAddress, config.rPOPAddress, amount).send({ from: state.account, gas: 3000000 }); 
             
