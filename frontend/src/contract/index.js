@@ -19,7 +19,7 @@ var config = {
     pPOPAddress: "0x270ae074bafa4f8b2751363721badc81a09dc0b0",      // presale token on Avalanch
 
     // rPOPAddress: "0xfc30966D42B6074edFaDb50D51b18F278EF32d9B"       // testing real token on Rinkeby
-    rPOPAddress: "0x92b06bBC0b960a3A8Ca24E30C5C6D3670709F668"       //  real token on Avalanch
+    rPOPAddress: "0x240248628b7b6850352764c5dfa50d1592a033a8"       //  real token on Avalanch
 
 };
 
