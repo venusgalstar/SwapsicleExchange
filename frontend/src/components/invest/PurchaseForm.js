@@ -102,10 +102,7 @@ const PurchaseForm = () => {
                                 <label>From</label>                                    
                                 { 
                                 balanceOfPresaleToken >= 0 ?
-                                    balanceOfPresaleToken - Math.floor(balanceOfPresaleToken) > 0 ?
-                                        <span>Balance : {Number(balanceOfPresaleToken).toFixed(3)}</span>
-                                        :
-                                        <span>Balance : {balanceOfPresaleToken}</span>
+                                    <span>Balance : {balanceOfPresaleToken}</span>
                                     :
                                     <span>Balance : 0 </span>
                                 }
@@ -139,10 +136,7 @@ const PurchaseForm = () => {
                                 <label>To</label>
                                 { 
                                 balanceOfRealToken >= 0 ?
-                                    balanceOfRealToken - Math.floor(balanceOfRealToken) > 0 ?
-                                        <span>Balance : {Number(balanceOfRealToken).toFixed(3)}</span>
-                                        :
-                                        <span>Balance : {balanceOfRealToken}</span>
+                                    <span>Balance : {balanceOfRealToken}</span>
                                     :
                                     <span>Balance : 0 </span>
                                 }

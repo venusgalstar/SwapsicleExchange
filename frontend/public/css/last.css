@@ -243,6 +243,7 @@ ul.buyInfo li {
 }
 .newInputs .amoutToken {
     margin-bottom: 23px;
+    height: 40px;
 }
 .imageDinar img {
     max-width: 24px;
@@ -327,6 +328,7 @@ button.selectDinar {
     font-size: 20px;
 }
 .amoutToken span{
+    padding-left: 10px;
     padding-top: 3px;
     color: #8a8c94;
     font-size: 15px;

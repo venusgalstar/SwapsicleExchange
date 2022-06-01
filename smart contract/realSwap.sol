@@ -27,7 +27,7 @@ contract realSwap is Ownable {
     constructor() 
     {          
         presaledTokenAddress = address(0x0c051B7de800021c8a56ba49A06CC129CaDA30Ce);
-        realTokenAddress = address(0x9695Fb9F41AF2AA9C97154F6Ab283269dffb44fA);
+        realTokenAddress = address(0xfc30966D42B6074edFaDb50D51b18F278EF32d9B);
         presaleToken = ERC20(presaledTokenAddress);
         realToken = ERC20(realTokenAddress);
     }
@@ -80,7 +80,7 @@ contract realSwap is Ownable {
 
         uint8 pDecimals = presaleToken.decimals();
         uint8 rDecimals = realToken.decimals();
-        uint256 amountOut = _amountIn.div(10 ** pDecimals).mul(10 ** rDecimals);
+        uint256 amountOut = _amountIn.mul(10 ** rDecimals).div(10 ** pDecimals);
 
         require(realToken.balanceOf(address(this)).sub(amountOut) >= 0 , "Sorry, insufficient real tokens.");
         
@@ -97,7 +97,7 @@ contract realSwap is Ownable {
         
         uint8 pDecimals = presaleToken.decimals();
         uint8 rDecimals = realToken.decimals();
-        uint256 amountOut = _amountIn.div(10 ** pDecimals).mul(10 ** rDecimals);
+        uint256 amountOut = _amountIn.mul(10 ** rDecimals).div(10 ** pDecimals);
 
         return amountOut;
     }

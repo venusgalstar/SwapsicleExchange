@@ -69,10 +69,25 @@ const swap = async (state, inputAmount) => {
         var pPOPDecimals = 18;
         var allowances =  await pPOPs.methods.allowance(state.account, config.contractAddress).call();
         allowances = web3.utils.toBN(allowances);
-        console.log("allowance = ", allowances);
-        var amount = new web3.utils.toBN(inputAmount);
-        amount = amount.mul(new web3.utils.toBN(Math.pow(10, pPOPDecimals).toString()));
+        let amount = ""; let pointIdx = inputAmount?.toString().indexOf(".");
+        if(pointIdx !== -1)
+        {   
+            let len = inputAmount.toString().length;
+            let m = len - pointIdx - 1;
+            let upper = inputAmount.toString().substring(0, pointIdx);
+            let lower = inputAmount.toString().substring(pointIdx+1, len);
+            upper += lower;
 
+            upper = new web3.utils.toBN(upper);
+            amount = upper.mul((new web3.utils.toBN(Math.pow(10, pPOPDecimals - m).toString())));
+        }
+        else 
+        {
+            amount = new web3.utils.toBN(inputAmount).mul(new web3.utils.toBN(Math.pow(10, pPOPDecimals).toString()));
+            amount = new web3.utils.toBN(amount);
+        }
+        console.log("pPOPBalance = ", pPOPBalance," amount = ", amount.toString());
+        
         if(pPOPBalance - amount >= 0)
         {            
             var amountOut = await contract.methods.getAmountOut(config.pPOPAddress, config.rPOPAddress, amount).call();
